@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="App\Department\Domain\Department" table="department">
+        <id name="uuid" type="uuid" column="uuid"/>
+        <field name="name" column="name" type="string"/>
+        <one-to-many field="employees" target-entity="App\Employee\Domain\Employee" fetch="LAZY" mapped-by="department"/>
+        <embedded name="departmentAdditionToBase" class="App\Payroll\Domain\ValueObject\DepartmentAdditionToBase" use-column-prefix="false"/>
+    </entity>
+</doctrine-mapping>

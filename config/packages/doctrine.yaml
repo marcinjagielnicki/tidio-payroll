@@ -1,0 +1,65 @@
+doctrine:
+    dbal:
+        url: '%env(resolve:DATABASE_URL)%'
+        driver:   pdo_mysql
+        charset: utf8mb4
+        server_version: '8.0'
+        types:
+            datetime_immutable: App\Shared\Infrastructure\Persistence\Doctrine\Types\DateTimeType
+        mapping_types:
+            uuid_binary: binary
+    orm:
+        auto_generate_proxy_classes: '%kernel.debug%'
+        naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
+        auto_mapping: true
+        mappings:
+            Shared:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/config/packages/doctrine/mapping/shared'
+                prefix: 'App\Shared'
+                alias: App
+            Employee:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/config/packages/doctrine/mapping/employee'
+                prefix: 'App\Employee'
+                alias: App
+            Department:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/config/packages/doctrine/mapping/department'
+                prefix: 'App\Department'
+                alias: App
+            Payroll:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/config/packages/doctrine/mapping/payroll'
+                prefix: 'App\Payroll'
+                alias: App
+
+when@test:
+    doctrine:
+        dbal:
+            # "TEST_TOKEN" is typically set by ParaTest
+            dbname_suffix: '_test%env(default::TEST_TOKEN)%'
+
+when@prod:
+    doctrine:
+        orm:
+            auto_generate_proxy_classes: false
+            proxy_dir: '%kernel.build_dir%/doctrine/orm/Proxies'
+            query_cache_driver:
+                type: pool
+                pool: doctrine.system_cache_pool
+            result_cache_driver:
+                type: pool
+                pool: doctrine.result_cache_pool
+
+    framework:
+        cache:
+            pools:
+                doctrine.result_cache_pool:
+                    adapter: cache.app
+                doctrine.system_cache_pool:
+                    adapter: cache.system

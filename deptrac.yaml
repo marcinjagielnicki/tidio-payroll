@@ -1,0 +1,59 @@
+parameters:
+    formatters:
+        graphviz:
+            pointToGroups: true
+            hidden_layers:
+                - Vendor
+            groups:
+                App:
+                    - Application
+                    - Domain
+                    - Infrastructure
+                    - UI
+                Vendor:
+                    - Vendor
+    paths:
+        - ./src
+    layers:
+        -   name: Domain
+            collectors:
+                -   type: className
+                    regex: .*\\Domain\\.*
+        -   name: Vendor
+            collectors:
+                -   type: directory
+                    regex: vendor/.*
+        -   name: Application
+            collectors:
+                -   type: className
+                    regex: .*Application\\.*
+        -   name: Infrastructure
+            collectors:
+                -   type: className
+                    regex: .*Infrastructure\\.*
+        -   name: UI
+            collectors:
+                -   type: className
+                    regex: UI\\.*
+        -   name: Doctrine ORM
+            collectors:
+                - type: className
+                  regex: ^Doctrine\\(Common|ORM)\\.*
+    ruleset:
+        Domain:
+            - Domain
+            - Infrastructure
+            - Doctrine ORM
+        Application:
+            - Domain
+            - Infrastructure
+            - Vendor
+        Infrastructure:
+            - Domain
+            - Application
+            - Vendor
+            - Doctrine ORM
+        UI:
+            - Domain
+            - Application
+            - Vendor
