@@ -50,6 +50,9 @@ deptrac: ## Run deptrac
 fixtures: ## Run fixtures
 	$(SYMFONY) d:f:l -n
 
+cs: ## Run cs check
+	$(PHP_CONT) vendor/bin/ecs check src tests
+
 cs-fix: ## Run cs fixer
 	$(PHP_CONT) vendor/bin/ecs check src tests --fix
 
