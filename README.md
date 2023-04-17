@@ -12,6 +12,26 @@ make migrations
 make fixtures
 ```
 
+Application will be available at http://localhost:5000
+
+Payroll report url: http://localhost:5000/api/payroll/report
+
+Available GET options:
+
+- sortBy (one of: uuid,
+  firstName,
+  lastName,
+  totalSalary,
+  additionToBase,
+  department.name,
+  remunerationBase,
+  department.bonusType)
+- sortByDirection (ASC, DESC)
+- filter (value to filter)
+- filterBy (uuid, firstName, lastName, departmentName)
+
+
+
 ## Testing
 
 ```bash
